@@ -1,0 +1,55 @@
+{% extends 'crm/base.html' %}
+{% block title %}Client List{% endblock %}
+{% block content %}
+<div class="header">
+    <div class="text-right mb-3">
+        <a href="{% url 'add_client' %}" class="btn">Add Client</a>
+    </div>
+</div>
+<div class="container">
+    <h2>Client List</h2>
+
+
+    <form method="GET" class="mb-3">
+        <input type="text" name="search" placeholder="Search clients..." value="{{ request.GET.search }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <!-- Sorting Links -->
+    <div>
+        <a href="?sort=first_name" class="btn">Sort by First Name</a>
+        <a href="?sort=last_name" class="btn">Sort by Last Name</a>
+        <a href="?sort=email" class="btn">Sort by Email</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>First Name  </th>
+                <th>Last Name  </th>
+                <th>Email  </th>
+                <th>Comments  </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for client in client_list %}
+                <tr>
+                    <td>| {{ client.first_name }} | </td>
+                    <td>| {{ client.last_name }} |</td>
+                    <td>| {{ client.email|truncatechars:15 }} |</td>
+                    <td>| {{ client.comments|truncatechars:80 }} |</td>
+                    <td>
+                        <a href="{% url 'edit_client' client.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'delete_client' client.id %}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No clients found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

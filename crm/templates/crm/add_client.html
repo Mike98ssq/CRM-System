@@ -1,0 +1,17 @@
+{% extends 'crm/base.html' %}
+{% block content %}
+<div class="container">
+<head>
+    <title>Add Client</title>
+</head>
+<body>
+    <h1>Add Client</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+    </form>
+    <a href="{% url 'client_list' %}">Back to Client List</a>
+</body>
+</html>
+{% endblock %}
